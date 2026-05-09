@@ -1,0 +1,31 @@
+import express from "express"
+import react from "react"
+import ReactDOM from "react-dom/server"
+import App from "./src/App.js"
+
+const app =express()
+
+app.get("/",(req,res) =>{
+    res.send("hello world")
+})
+
+app.get("/chaicode" ,(req,res)=>{
+    const appHtml = ReactDOM.renderToString(React.createElement(App))
+    res.setHeader("Content-Type" ,"text/html")
+    res.send(`
+       <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+</head>
+<body>
+<div id="root">${appHtml}</div>
+</html> 
+    `)
+})
+
+
+app.listen(3000,()=>{
+    console.log("server is running on port 3000")
+})
